@@ -1,3 +1,8 @@
+========================
+ MAIN PDDL Problem 10
+========================
+
+
 (define (problem problem_map10)
 (:domain Trucks)
 
