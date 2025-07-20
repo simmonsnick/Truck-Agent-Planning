@@ -2,7 +2,7 @@
  MAIN PDDL Problem 02
 ========================
 
-(define (problem truck-1)
+(define (problem problem_map2)
 (:domain Trucks)
 
 (:objects
