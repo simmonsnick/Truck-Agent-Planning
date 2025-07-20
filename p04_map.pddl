@@ -18,7 +18,7 @@
         m5 - location
         m6 - location
         m7 - location
-        City1 -location
+        City1 - location
         t0 - time
         t1 - time
         t2 - time
