@@ -1,8 +1,4 @@
-========================
- MAIN PDDL Problem 01
-========================
-
-(define (problem problem_map1)
+(define (problem truck-1)
 (:domain Trucks)
 
 (:objects
@@ -30,7 +26,7 @@
         a2 - truckarea)
 
 (:init
-        (at truck1 m2)
+        (at truck1 m1)
         (free a1 truck1)
         (free a2 truck1)
         (closer a1 a2)
