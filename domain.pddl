@@ -1,16 +1,11 @@
-========================
- MAIN PDDL DOMAIN FILE
-========================
-
-; File: domain.pddl
-; Description: IPC5 Domain for Trucks
-
 ; IPC5 Domain: Trucks Propositional
+
 (define (domain Trucks)
 (:requirements :typing :disjunctive-preconditions)
+
 (:types truckarea time location locatable - object
         truck package - locatable)
-        
+
 (:predicates (at ?x - truck ?l - location)
              (in ?p - package ?t - truck)
              ; (connected ?x ?y - location)
@@ -48,18 +43,6 @@
                (time-now ?t1)(next ?t1 ?t2))
  :effect (and (not (at ?t ?from)) (at ?t ?to)
      (not (time-now ?t1)) (time-now ?t2)))
-
-(:action drive-traffic
- :parameters (?t - truck ?from ?to - Location ?t1 ?t3 - time)
- :precondition (and (at ?t ?from) (connected traffic ?from ?to)
-     (time-now ?t1)(next ?t1 ?t2) (next ?t2 ?t3)) ; traffic takes 2 steps
- :effect (and (not (at ?t ?from)) (at ?t ?to)
-     (not (time-now ?t1)) (time-now ?t3)))
-
-(:action drive-blocked :parameters (?t - truck ?from ?to - Location)
- :precondition (connected-blocked ?from ?to)
- :effect (and) ; no movement occurs
-)
 
 (:action deliver
  :parameters (?p - package ?l - location ?t1 ?t2 - time)
