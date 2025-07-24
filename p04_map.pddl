@@ -1,7 +1,3 @@
-========================
- MAIN PDDL Problem 04
-========================
-
 (define (problem problem_map4)
 (:domain Trucks)
 
@@ -18,7 +14,7 @@
         m5 - location
         m6 - location
         m7 - location
-        City1 - location
+        City1 -location
         t0 - time
         t1 - time
         t2 - time
@@ -34,7 +30,7 @@
         a2 - truckarea)
 
 (:init
-        (at truck1 m2)
+        (at truck1 m1)
         (free a1 truck1)
         (free a2 truck1)
         (closer a1 a2)
@@ -49,7 +45,7 @@
         (connected-clear m1 m3)
         (connected-clear m3 m1)
         (connected-clear m1 m4)
-        (connected-traffic m4 m1)
+        (connected-clear m4 m1)
         (connected-clear m2 m3)
         (connected-clear m3 m2)
         (connected-clear m2 m4)
