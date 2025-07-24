@@ -1,13 +1,11 @@
 import sys
-import copy
-import random
 from collections import defaultdict
 
 # ==== Plan File Input ====
 plan_file = sys.argv[1] if len(sys.argv) > 1 else "sas_plan"
 
 try:
-    with open(plan_file, "r") as f:
+    with open(plan_file, "r") as f:  # read each line of the plan file
         lines = f.readlines()
 except FileNotFoundError:
     print(f"Error: Cannot open plan file: {plan_file}")
@@ -20,9 +18,9 @@ num_actions = sum(
 )
 
 
-# === Possibility Score (Lower actions = higher score) ===
+# === Calculate score based on number of actions ===
 score = round(1.0 / (1 + num_actions), 3)
-print("Possibility Degree:", score)
+print("Action-Based:", score)
 
 
 # === Base Segment Probabilities ===
@@ -49,20 +47,6 @@ def calculate_possibility(probabilities):
         1 - probabilities[5]
     )
 
-# === Find all paths between two nodes ===
-def map_paths(graph, current, end, path=None):
-    if path is None:
-        path = []
-    path = path + [current]
-    if current == end:
-        return [path]
-    paths = []
-    for node in graph[current]:
-        if node not in path:
-            new_paths = map_paths(graph, node, end, path)
-            paths.extend(new_paths)
-    return paths
-
 # === Get path score ===
 def calculate_path_possibility(path, possibilities):
     try:
@@ -70,56 +54,6 @@ def calculate_path_possibility(path, possibilities):
     except KeyError:
         return None
 
-# === Generate best path per agent ===
-def compute_agent_paths(agents, base_segments):
-    agent_paths = {}
-    for agent_index, (agent, info) in enumerate(agents.items()):
-        # Deep copy  per agent
-        custom_segments = copy.deepcopy(base_segments)
-        for seg in custom_segments:
-            for i in range(2, len(seg)):
-                delta = random.uniform(-0.05, 0.05)
-                seg[i] = max(0.0, min(1.0, seg[i] + delta))
-
-        # Build agent graph
-        graph = defaultdict(list)
-        for start, end, *_ in custom_segments:
-            graph[start].append(end)
-
-        # Build possibility map for this agent
-        possibilities = {
-            (row[0], row[1]): calculate_possibility(row[2:])
-            for row in custom_segments
-        }
-
-        # Get all valid paths and their scores
-        all_paths = map_paths(graph, info['start'], info['goal'])
-        path_scores = {
-            tuple(p): calculate_path_possibility(p, possibilities)
-            for p in all_paths
-            if calculate_path_possibility(p, possibilities) is not None
-        }
-
-        if path_scores:
-            best_path = max(path_scores, key=path_scores.get)
-            agent_paths[agent] = {
-                'path': best_path,
-                'possibility': round(path_scores[best_path], 3)
-            }
-        else:
-            agent_paths[agent] = {'path': None, 'possibility': None}
-
-    return agent_paths
-
-# === Output Results ===
-def print_agent_paths(agent_paths):
-    print("\n--- Agent Simulations ---")
-    for agent, result in agent_paths.items():
-        if result['path']:
-            path_str = '-'.join(result['path'])
-            print(f"{agent}: Best path is {path_str} with possibility {result['possibility']}")
-        else:
-            print(f"{agent}: No valid path found.")
 
 def truck_plan_path(plan_lines):
     path = []
@@ -137,16 +71,6 @@ def truck_plan_path(plan_lines):
 
 # === Main Function ===
 def main():
-    agents = {
-        'Agent1': {'start': 'M1', 'goal': 'M7'},
-        'Agent2': {'start': 'M1', 'goal': 'M7'},
-        'Agent3': {'start': 'M1', 'goal': 'M7'}
-        #'Agent4': {'start': 'M1', 'goal': 'M7'},
-        #'Agent5': {'start': 'M1', 'goal': 'M7'}
-    }
-
-    agent_paths = compute_agent_paths(agents, base_segments)
-    print_agent_paths(agent_paths)
 
     # === Actual Plan Analysis ===
     try:
