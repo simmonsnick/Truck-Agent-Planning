@@ -1,7 +1,3 @@
-========================
- MAIN PDDL Problem 03
-========================
-
 (define (problem problem_map3)
 (:domain Trucks)
 
@@ -53,7 +49,7 @@
         (connected-clear m7 m4)
         (connected-clear m7 m5)
         (connected-clear m5 m7)
-        (connected-traffic m5 m1)
+        (connected-clear m5 m1)
         (connected-clear m1 m5)
         (connected-clear m2 m6)
         (connected-clear m6 m2)
@@ -143,7 +139,7 @@
 (:goal (and
         (delivered package1 m3 t3)
         (delivered package2 m1 t6)
-        (delivered package3 m1 t6)
+        (delivered package3 m1 t5)
         (delivered package4 m2 t7)))
 
 
