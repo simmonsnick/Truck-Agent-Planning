@@ -6,7 +6,7 @@ def main():
 
     # === File Inputs ===
     plan_file = sys.argv[1] if len(sys.argv) > 1 else "input_plan.txt"
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "output_plan.txt"
+
 
     # === Anomaly Detection Threshold ===
     threshold = 2
@@ -68,11 +68,7 @@ def main():
                     if src in block_location or dst in block_location:
                         output_lines[i] = f"{lines[i].strip()}  anomaly: Hazardous Route\n"
                         added += 1
-
-    # === Final Output ===
-    with open(output_file, "w") as out:
-        for line in output_lines:
-            out.write(line)
+                        print(output_lines[i])
 
 
 if __name__ == "__main__":
