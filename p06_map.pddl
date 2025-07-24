@@ -1,7 +1,3 @@
-========================
- MAIN PDDL Problem 06
-========================
-
 (define (problem problem_map6)
 (:domain Trucks)
 
@@ -33,7 +29,7 @@
         a2 - truckarea)
 
 (:init
-        (at truck1 m2)
+        (at truck1 m1)
         (free a1 truck1)
         (free a2 truck1)
         (closer a1 a2)
@@ -46,9 +42,9 @@
 
         ;; Map6- road connections
         (connected-clear m1 m2)
-        (connected-traffic m2 m1)
-        (connected-blocked m2 m3)
-        (connected-traffic m3 m2)
+        (connected-clear m2 m1)
+        (connected-clear m2 m3)
+        (connected-clear m3 m2)
         (connected-clear m3 m4)
         (connected-clear m4 m3)
         (connected-clear m4 m5)
