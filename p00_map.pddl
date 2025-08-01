@@ -1,4 +1,4 @@
-(define (problem truck-1)
+(define (problem problem_map0)
 (:domain Trucks)
 
 (:objects
