@@ -10,8 +10,6 @@
              (in ?p - package ?t - truck)
              ; (connected ?x ?y - location)
              (connected-clear ?from ?to - location)
-             (connected-traffic ?from ?to - location)
-             (connected-blocked ?from ?to - location)
              (free ?a - truckarea ?t - truck)
              (time-now ?t - time)
              (next ?t1 - time ?t2 - time)
@@ -29,13 +27,6 @@
  :parameters (?p - package ?t - truck ?a - truckarea ?l - location)
  :precondition (and (at ?t ?l) (in ?p ?t))
  :effect (and (at ?p ?l) (free ?a ?t) (not (in ?p ?t))))
-
-; (:action drive
-; :parameters (?t - truck ?from ?to - location ?t1 ?t2 - time)
-; :precondition (and (at ?t ?from) (connected ?from ?to)
-; (time-now ?t1) (next ?t1 ?t2))
-; :effect (and (not (at ?t ?from)) (at ?t ?to)
-; (not (time-now ?t1)) (time-now ?t2)))
 
 (:action drive-clear
  :parameters (?t - truck ?from ?to - Location ?t1 ?t2 - time)
